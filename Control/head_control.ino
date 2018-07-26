@@ -24,9 +24,19 @@ int button = 4, LED = 12;
 
 void setup() {
 	servo1.attach(6);
-	
+	pinMode(button, INPUT_PULLUP);
 }
 
 void loop() {
-	angle 
+
+	 angle = map(analogRead(A1), 0, 1024, 0, 180);
+	 servo1.write(angulo); // Movimiento de servo segun angulo
+
+	 //Boton de joystick
+	 if(!digitalRead(button)){
+	 	digitalWrite(LED, HIGH);
+	 } else {
+	 	digitalWrite(LED, LOW);
+	 }
+	 delay(250);
 }
