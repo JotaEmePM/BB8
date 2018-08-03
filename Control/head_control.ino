@@ -1,6 +1,6 @@
 /*
 	Project BB-8 - Head control
-	Author: José Miguel Pérez
+	Author: JosÃ© Miguel PÃ©rez
 	Email: perezmjosem@gmail.com
 	
 	Features:
@@ -14,29 +14,42 @@
 */
 
 #include <Servo.h>
+
+Serial.begin(9600);
 Servo servo1; // Servo for testing.
 
-int angle = 0;
+int angle = 90;
+int jump = 3;
 int xAxis = A1;
 int yAxis = A2;
 
 int button = 4, LED = 12;
 
 void setup() {
+	Serial.write("setup");
 	servo1.attach(6);
 	pinMode(button, INPUT_PULLUP);
 }
 
 void loop() {
+	int px = analogRead(A1);
+	int py = analogRead(A2);
 
-	 angle = map(analogRead(A1), 0, 1024, 0, 180);
-	 servo1.write(angulo); // Movimiento de servo segun angulo
+	Serial.write("{ X: '" + px + "', Y: '" + py + "' }");
 
-	 //Boton de joystick
-	 if(!digitalRead(button)){
-	 	digitalWrite(LED, HIGH);
-	 } else {
-	 	digitalWrite(LED, LOW);
-	 }
-	 delay(250);
+	if(px < 400) {
+		angle = angle - salto;
+	} else if(px > 600) {
+		angle = angle + jump;
+	}
+
+	servo1.write(angulo); // Movimiento de servo segun angulo
+
+	//Boton de joystick
+	if(!digitalRead(button)){
+		digitalWrite(LED, HIGH);
+	} else {
+		digitalWrite(LED, LOW);
+	}
+	delay(250);
 }
